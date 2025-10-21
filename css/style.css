@@ -553,8 +553,10 @@ button {
     width: 100%;
     float: left;
     font-size: 16px;
+    font-weight: bold;
     text-align: center;
-    border: 1px solidcornflowerblue;    color:cornflowerblue;
+    border: 1px ;
+   color:rgb(10, 11, 11);
     padding: 8px 0px;
     border-radius: 40px;
 }

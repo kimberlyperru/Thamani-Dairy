@@ -116,17 +116,29 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       const productBox = btn.closest(".custom-gram-product");
       const input = productBox.querySelector(".quantity-input");
-      const grams = parseInt(input.value, 10);
+      const quantity = parseFloat(input.value);
 
-      if (!grams || grams <= 0) {
-        alert("Please enter a valid quantity in grams.");
+      if (!quantity || quantity <= 0) {
+        alert("Please enter a valid quantity.");
         return;
       }
 
       const productName = productBox.dataset.productName;
-      const pricePerGram = parseFloat(productBox.dataset.pricePerGram);
-      const calculatedPrice = Math.round(grams * pricePerGram);
-      const finalName = `${productName} (${grams}g)`;
+      let calculatedPrice;
+      let finalName;
+
+      if (productBox.dataset.pricePerKg) {
+        // Handle items sold by kilogram (like Ghee)
+        const pricePerKg = parseFloat(productBox.dataset.pricePerKg);
+        calculatedPrice = Math.round(quantity * pricePerKg);
+        finalName = `${productName} (${quantity}kg)`;
+      } else {
+        // Handle items sold by gram (like Butter and Cheese)
+        const pricePerGram = parseFloat(productBox.dataset.pricePerGram);
+        calculatedPrice = Math.round(quantity * pricePerGram);
+        finalName = `${productName} (${quantity}g)`;
+      }
+
       addToCart(finalName, calculatedPrice, 1); // Add as a single item with the calculated price
     });
   });
